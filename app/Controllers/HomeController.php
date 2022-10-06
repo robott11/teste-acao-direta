@@ -6,8 +6,12 @@ use App\Http\Request;
 
 class HomeController extends Controller
 {
-    public function test(Request $request)
+    public function test(Request $request): string
     {
-        return 'Hello World: ' . $request->getUri();
+        $uri = $request->getUri();
+
+        return $this->view('home/index', [
+            'uri' => $uri
+        ]);
     }
 }
