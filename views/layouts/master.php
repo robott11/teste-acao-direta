@@ -8,9 +8,10 @@
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-    <title><?php echo $title ?? 'Document' ?></title>
+    <title>Empresa XXX | <?php echo $title ?? 'Document' ?></title>
 </head>
-<body>
+<body class="bg-light bg-gradient">
+
     <?php echo $content ?>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
