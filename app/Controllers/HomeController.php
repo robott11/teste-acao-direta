@@ -10,7 +10,8 @@ class HomeController extends Controller
     {
         $uri = $request->getUri();
 
-        return $this->view('home/index', [
+        return $this->view('home/index', 'layouts/master', [
+            'title' => 'Example',
             'uri' => $uri
         ]);
     }

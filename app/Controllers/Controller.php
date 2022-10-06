@@ -2,18 +2,23 @@
 
 namespace App\Controllers;
 
-class Controller
+use App\Http\View;
+
+abstract class Controller
 {
-    protected function view(string $view, array $data = []): string
+    private function getPage(string $layout, $data): string
     {
-        extract($data);
+        return View::render($layout, $data);
+    }
 
-        ob_start();
-        include __DIR__ . '/../../views/' . $view . '.php';
+    protected function view(string $view, string $layout, array $data = []): string
+    {
+        $content = View::render($view, $data);
 
-        $contents = ob_get_contents();
-        ob_end_clean();
+        $data = array_merge($data, [
+            'content' => $content
+        ]);
 
-        return $contents;
+        return $this->getPage($layout, $data);
     }
 }
