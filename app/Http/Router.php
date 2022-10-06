@@ -37,7 +37,7 @@ class Router
             $controller = new $action[0];
             $content = call_user_func([$controller, $action[1]], $this->request);
 
-            return new Response($content);
+            return new Response(200, $content);
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getCode());
         }
