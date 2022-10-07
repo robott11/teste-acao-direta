@@ -11,3 +11,13 @@ if (!function_exists('dd')) {
         exit;
     }
 }
+
+if (!function_exists('config')) {
+    function config(string $key): string|null {
+        if (isset($GLOBALS['config'][$key])) {
+            return $GLOBALS['config'][$key];
+        }
+
+        return null;
+    }
+}
