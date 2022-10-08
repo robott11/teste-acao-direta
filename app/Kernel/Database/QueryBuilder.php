@@ -3,47 +3,91 @@
 namespace App\Kernel\Database;
 
 use PDO;
+use PDOStatement;
 
 class QueryBuilder extends DatabaseConnection
 {
     private string $table;
 
-    private string $select;
+    private string $sql = '';
 
-    private string $where;
-
-    private string $sql;
+    private string $wheres = '';
 
     public function __construct(string $table)
     {
         $this->table = $table;
     }
 
-    public function execute(array $args = [])
+    private function execute(): PDOStatement|null
     {
-        $smt = self::$db->prepare($this->sql);
+        $query = self::$db->prepare($this->sql);
+        $query->execute();
 
-        foreach ($args as $column => $value) {
-            $smt->bindValue($column, $value);
+        if ($query->rowCount() < 0) {
+            return null;
         }
 
-        $smt->execute();
-
-        return $smt->fetch(PDO::FETCH_ASSOC);
+        return $query;
     }
 
-    public function getByid(int $id)
+    public function updateTable(array $attributes): PDOStatement
     {
-        $this->select = 'SELECT * ';
-        $this->where = 'WHERE id = :id';
-        $this->sql = $this->select . 'FROM ' . $this->table . ' ' . $this->where;
+        if (!isset($attributes['id'])) {
+            return false;
+        }
 
-        return $this->execute(['id' => $id]);
-    }
+        $this->where('id', '=', $attributes['id']);
+        unset($attributes['id']);
 
-    public function getAll()
-    {
-        $this->select = 'SELECT * ';
+        $setData = '';
+        foreach ($attributes as $key => $value) {
+            if ($key == array_key_last($attributes)) {
+                $setData .= $key . " = '" . $value . "' ";
+                break;
+            }
+            $setData .= $key . " = '" . $value . "', ";
+        }
+
+        $this->sql = 'UPDATE ' . $this->table . ' SET ' . $setData . $this->wheres;
         return $this->execute();
+    }
+
+    public function insert(array $attributes)
+    {
+        $columns = implode(', ', array_keys($attributes));
+
+        $values = array_map(function ($val) {
+            return "'" . $val . "'";
+        }, array_values($attributes));
+
+        $values = implode(', ', $values);
+
+        $this->sql = 'INSERT INTO ' . $this->table . ' (' . $columns . ') VALUES (' . $values . ')';
+
+        $query = self::$db->prepare($this->sql);
+
+        if (!$query->execute()) {
+            return false;
+        }
+
+        return self::$db->lastInsertId();
+    }
+
+    public function get()
+    {
+        $this->sql = 'SELECT * FROM ' . $this->table . ' ' . $this->wheres;
+
+        return $this->execute()->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function where(string $column, string $operator, string $value): QueryBuilder
+    {
+        if (!empty($this->wheres)) {
+            $this->wheres .= ' AND ';
+        }
+
+        $this->wheres = 'WHERE ' . $column . ' ' . $operator . ' ' . $value;
+
+        return $this;
     }
 }
