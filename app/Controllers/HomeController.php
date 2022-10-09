@@ -7,8 +7,12 @@ use App\Http\Response;
 
 class HomeController extends Controller
 {
-    public function test(Request $request): Response
+    public function index(): Response
     {
-        return new Response(200, 'FUNCIONOU: '. $request->getUri());
+        $data = [
+            'title' => 'Home page'
+        ];
+
+        return $this->view('home/index', 'layouts/master', $data);
     }
 }

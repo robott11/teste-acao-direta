@@ -1,10 +1,7 @@
 <?php
 
-use App\Http\Router;
-use App\Controllers\LoginController;
 use App\Controllers\HomeController;
 use App\Http\Middlewares\checkAuth;
+use App\Http\Router;
 
-Router::get('/home', [HomeController::class, 'test'], checkAuth::class);
-Router::post('/home', [HomeController::class, 'store']);
-Router::get('/login', [LoginController::class, 'index']);
+Router::get('/', [HomeController::class, 'index'], checkAuth::class);
