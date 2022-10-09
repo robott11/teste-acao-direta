@@ -11,9 +11,10 @@ class App
 
     public function __construct()
     {
-       $this->router = new Router();
-       $this->initConfigs();
-       DatabaseConnection::init();
+        session_start();
+        $this->router = new Router();
+        $this->initConfigs();
+        DatabaseConnection::init();
     }
 
     public function run()

@@ -10,11 +10,18 @@ class Response
 
     private string $content = '';
 
-    public function __construct(int $statusCode, string $content, string $contentType = 'text/html')
+    public function __construct(int $statusCode = 200, string $content = '', string $contentType = 'text/html')
     {
         $this->httpCode = $statusCode;
         $this->content = $content;
         $this->setContentType($contentType);
+    }
+
+    public function redirect(string $to)
+    {
+        $this->addHeader('Location', $to);
+
+        return $this;
     }
 
     private function setContentType(string $contentType): void
