@@ -2,16 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Http\View;
+use App\Http\Response;
+use App\Http\View;;
 
 abstract class Controller
 {
-    private function getPage(string $layout, $data): string
+    private function getPage(string $layout, $data): Response
     {
-        return View::render($layout, $data);
+        return new Response(200, View::render($layout, $data));
     }
 
-    protected function view(string $view, string $layout, array $data = []): string
+    protected function view(string $view, string $layout, array $data = []): Response
     {
         $content = View::render($view, $data);
 

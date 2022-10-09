@@ -2,8 +2,6 @@
 
 namespace App\Http;
 
-use App\Controllers\Controller;
-
 class Router
 {
     private Request $request;
@@ -17,7 +15,7 @@ class Router
 
     public static function registerRoute(string $method, string $uri, array $action): void
     {
-        self::$routes[$uri][$method] = $action;
+        self::$routes[] = new Route($method, $uri, $action);
     }
 
     public static function get(string $uri, array $action): void
@@ -33,24 +31,20 @@ class Router
     public function handle(): Response
     {
         try {
-            $action = $this->getRoute();
-            $controller = new $action[0];
-            $content = call_user_func([$controller, $action[1]], $this->request);
-
-            return new Response(200, $content);
+            return $this->getRoute()->callAction($this->request);
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getCode());
         }
     }
 
-    private function getRoute()
+    private function getRoute(): Route
     {
         $uri = $this->request->getUri();
         $method = $this->request->getMethod();
 
-        foreach (self::$routes as $route => $routeMethod) {
-            if (($route == $uri) && isset($routeMethod[$method])) {
-                return $routeMethod[$method];
+        foreach (self::$routes as $route) {
+            if ($route->getUri() == $uri && $route->getMethod() == $method) {
+                return $route;
             }
         }
 
