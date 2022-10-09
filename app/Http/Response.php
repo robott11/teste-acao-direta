@@ -17,9 +17,16 @@ class Response
         $this->setContentType($contentType);
     }
 
-    public function redirect(string $to)
+    public function redirect(string $to): Response
     {
         $this->addHeader('Location', $to);
+
+        return $this;
+    }
+
+    public function withError(string $key, string $value): Response
+    {
+        $_SESSION['errors'][$key] = $value;
 
         return $this;
     }

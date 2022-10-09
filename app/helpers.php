@@ -21,3 +21,25 @@ if (!function_exists('config')) {
         return null;
     }
 }
+
+if (!function_exists('error')) {
+    function error(?string $key): string|array {
+        if ($key && isset($_SESSION['errors'][$key])) {
+            $error = $_SESSION['errors'][$key];
+            unset($_SESSION['errors'][$key]);
+
+            return $error;
+        }
+
+        $error = $_SESSION['errors'];
+        unset($_SESSION['errors']);
+
+        return $error;
+    }
+}
+
+if (!function_exists('hasErrors')) {
+    function hasErrors(string $key): bool {
+        return isset($_SESSION['errors'][$key]);
+    }
+}
