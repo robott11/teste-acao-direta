@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middlewares\middleware;
+
 class Router
 {
     private Request $request;
@@ -13,25 +15,25 @@ class Router
         $this->request = new Request();
     }
 
-    public static function registerRoute(string $method, string $uri, array $action): void
+    public static function registerRoute(string $method, string $uri, array $action, array|string $middlewares = []): void
     {
-        self::$routes[] = new Route($method, $uri, $action);
+        self::$routes[] = new Route($method, $uri, $action, $middlewares);
     }
 
-    public static function get(string $uri, array $action): void
+    public static function get(string $uri, array $action, array|string $middlewares = []): void
     {
-        self::registerRoute('GET', $uri, $action);
+        self::registerRoute('GET', $uri, $action, $middlewares);
     }
 
-    public static function post(string $uri, array $action): void
+    public static function post(string $uri, array $action, array|string $middlewares = []): void
     {
-        self::registerRoute('POST', $uri, $action);
+        self::registerRoute('POST', $uri, $action, $middlewares);
     }
 
     public function handle(): Response
     {
         try {
-            return $this->getRoute()->callAction($this->request);
+            return (new middleware($this->getRoute()))->next($this->request);
         } catch (\Exception $e) {
             dd($e->getMessage(), $e->getCode());
         }

@@ -62,4 +62,9 @@ class Route
     {
         return $this->uri;
     }
+
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
+    }
 }

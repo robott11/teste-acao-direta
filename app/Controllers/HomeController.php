@@ -3,16 +3,12 @@
 namespace App\Controllers;
 
 use App\Http\Request;
+use App\Http\Response;
 
 class HomeController extends Controller
 {
-    public function test(Request $request): string
+    public function test(Request $request): Response
     {
-        $uri = $request->getUri();
-
-        return $this->view('home/index', 'layouts/master', [
-            'title' => 'Example',
-            'uri' => $uri
-        ]);
+        return new Response(200, 'FUNCIONOU: '. $request->getUri());
     }
 }
