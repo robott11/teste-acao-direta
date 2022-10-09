@@ -4,7 +4,7 @@ namespace App\Http;
 
 class View
 {
-    public static function render(string $view, array $data): string
+    public static function render(string $view, array $data = []): string
     {
         extract($data);
 

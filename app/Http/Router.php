@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Exceptions\RouteNotFoundException;
 use App\Http\Middlewares\middleware;
 
 class Router
@@ -34,8 +35,10 @@ class Router
     {
         try {
             return (new middleware($this->getRoute()))->next($this->request);
-        } catch (\Exception $e) {
-            dd($e->getMessage(), $e->getCode());
+        } catch (RouteNotFoundException $e) {
+            return new Response($e->getCode(), View::render('errors/404', [
+                'message' => $e->getMessage()
+            ]));
         }
     }
 
@@ -50,6 +53,6 @@ class Router
             }
         }
 
-        throw new \Exception('ROTA NÂO ENCONTRADA!', 404);
+        throw new RouteNotFoundException('Erro 404 | Página não encontrada!');
     }
 }
