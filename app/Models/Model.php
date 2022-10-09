@@ -74,4 +74,15 @@ abstract class Model
 
         return $collection;
     }
+
+    public static function where(string $column, string $operator, string $value): Model|null
+    {
+        $results = (new QueryBuilder(static::$table))->where($column, $operator, $value)->get();
+
+        if (count($results) < 1) {
+            return null;
+        }
+
+        return self::setAttributes($results[0]);
+    }
 }

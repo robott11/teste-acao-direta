@@ -86,7 +86,7 @@ class QueryBuilder extends DatabaseConnection
             $this->wheres .= ' AND ';
         }
 
-        $this->wheres = 'WHERE ' . $column . ' ' . $operator . ' ' . $value;
+        $this->wheres = 'WHERE ' . $column . ' ' . $operator . ' "' . $value . '"';
 
         return $this;
     }

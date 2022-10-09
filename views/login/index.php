@@ -21,6 +21,12 @@
                         <div class="p-2">
                             <div class="mb-3">
                                 <form method="POST" class="p-2">
+                                    <?php if (hasErrors('login')): ?>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <?php echo error('login') ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="form-floating mb-3">
                                         <input name="user" type="text" class="form-control" id="user-input" placeholder="exemplo@email.com">
                                         <label for="user-input">Nome de Usuário</label>

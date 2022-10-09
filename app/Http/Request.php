@@ -20,6 +20,15 @@ class Request
         $this->postVars = $_POST ?? [];
     }
 
+    public function __get(string $name): mixed
+    {
+        if (isset($this->queryParams[$name])) {
+            return $this->queryParams[$name];
+        } else {
+            return $this->postVars[$name];
+        }
+    }
+
     public function getUri(): string
     {
         return $this->uri;
