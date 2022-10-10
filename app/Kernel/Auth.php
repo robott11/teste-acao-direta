@@ -13,6 +13,17 @@ class Auth
         return true;
     }
 
+    public static function logout(string $authType = 'user')
+    {
+        if (!isset($_SESSION['auth'][$authType])) {
+            return false;
+        }
+
+        unset($_SESSION['auth'][$authType]);
+
+        return true;
+    }
+
     public static function check(string $authType = 'user'): bool
     {
         if (!isset($_SESSION['auth'][$authType])) {
@@ -20,5 +31,10 @@ class Auth
         }
 
         return true;
+    }
+
+    public static function getAuthUser(string $authType = 'user')
+    {
+        return $_SESSION['auth'][$authType];
     }
 }

@@ -34,4 +34,13 @@ class LoginController extends Controller
 
         return (new Response)->redirect('/');
     }
+
+    public function logout(): Response
+    {
+        if (Auth::getAuthUser()) {
+            Auth::logout();
+
+            return (new Response)->redirect('/login');
+        }
+    }
 }
