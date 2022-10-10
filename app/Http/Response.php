@@ -8,9 +8,9 @@ class Response
 
     private array $headers = [];
 
-    private string $content = '';
+    private mixed $content = '';
 
-    public function __construct(int $statusCode = 200, string $content = '', string $contentType = 'text/html')
+    public function __construct(int $statusCode = 200, mixed $content = '', string $contentType = 'text/html')
     {
         $this->httpCode = $statusCode;
         $this->content = $content;
@@ -57,6 +57,9 @@ class Response
         switch ($this->headers['Content-Type']) {
             case 'text/html':
                 echo $this->content;
+                break;
+            case 'application/json':
+                echo json_encode($this->content);
                 break;
         }
     }

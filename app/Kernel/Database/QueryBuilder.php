@@ -57,6 +57,9 @@ class QueryBuilder extends DatabaseConnection
         $columns = implode(', ', array_keys($attributes));
 
         $values = array_map(function ($val) {
+            if (is_bool($val)) {
+                return $val;
+            }
             return "'" . $val . "'";
         }, array_values($attributes));
 

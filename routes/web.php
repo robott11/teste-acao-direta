@@ -9,3 +9,4 @@ Router::get('/', [HomeController::class, 'index'], checkAuth::class);
 Router::get('/login', [LoginController::class, 'index']);
 Router::post('/login', [LoginController::class, 'login']);
 Router::get('/logout', [LoginController::class, 'logout']);
+Router::get('/point', [HomeController::class, 'hitPoint']);

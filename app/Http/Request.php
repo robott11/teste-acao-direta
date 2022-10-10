@@ -31,6 +31,9 @@ class Request
 
     public function getUri(): string
     {
+        if (str_contains($this->uri, '?')) {
+            return strstr($this->uri, '?', true);
+        }
         return $this->uri;
     }
 

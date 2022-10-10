@@ -15,7 +15,9 @@
                         <li><a class="dropdown-item text-danger" href="/logout">Sair</a></li>
                     </ul>
                 </div>
-                <button class="btn btn-outline-secondary text-light rounded-pill w-100 mb-4">REGISTRAR PONTO</button>
+                <button class="btn btn-outline-secondary text-light rounded-pill w-100 mb-4" type="button" id="clock-btn">
+                    REGISTRAR PONTO
+                </button>
             </li>
             <li class="nav-item mb-2">
                 <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
@@ -32,6 +34,23 @@
         </ul>
     </div>
     <div class="col-10">
-        v
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Entrada/Saída</th>
+                <th>Hora</th>
+                <th>Usuário</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($points as $point): ?>
+            <tr>
+                <td><?php echo $point->is_entrance ?></td>
+                <td><?php echo $point->hour ?></td>
+                <td><?php echo $user->name ?></td>
+            </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
     </div>
 </div>

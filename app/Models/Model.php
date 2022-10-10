@@ -18,6 +18,11 @@ abstract class Model
         $this->attributes[$name] = $value;
     }
 
+    public function toArray(): array
+    {
+        return $this->attributes;
+    }
+
     public function save(): Model|false
     {
         $query = new QueryBuilder(static::$table);
@@ -55,9 +60,13 @@ abstract class Model
         return $model;
     }
 
-    public static function getById(int $id): Model
+    public static function getById(int $id): Model|null
     {
         $results = (new QueryBuilder(static::$table))->where('id', '=', $id)->get();
+
+        if (count($results) < 1) {
+            return null;
+        }
 
         return self::setAttributes($results[0]);
     }
@@ -75,12 +84,22 @@ abstract class Model
         return $collection;
     }
 
-    public static function where(string $column, string $operator, string $value): Model|null
+    public static function where(string $column, string $operator, string $value): Model|array|null
     {
         $results = (new QueryBuilder(static::$table))->where($column, $operator, $value)->get();
 
         if (count($results) < 1) {
             return null;
+        }
+
+        if (count($results) > 1) {
+            $collection = [];
+
+            foreach ($results as $result) {
+                $collection[] = self::setAttributes($result);
+            }
+
+            return $collection;
         }
 
         return self::setAttributes($results[0]);
