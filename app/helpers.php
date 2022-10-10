@@ -43,3 +43,11 @@ if (!function_exists('hasErrors')) {
         return isset($_SESSION['errors'][$key]);
     }
 }
+
+if (!function_exists('convertDateTimeDB')) {
+    function convertDateTimeDB(string $dateTime, string $format = 'd/m/Y H:i:s'): string {
+        $dateTimeOb = new DateTime($dateTime, new DateTimeZone('America/Sao_Paulo'));
+
+        return $dateTimeOb->format($format);
+    }
+}
