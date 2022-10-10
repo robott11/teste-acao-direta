@@ -8,7 +8,7 @@ class Point extends Model
 
     public static function getPointsByUserId(int $id)
     {
-        return self::where('user_id', '=', $id);
+        return self::where('user_id', '=', $id)->orderBy('hour')->get();
     }
 
     public static function getLastPointFromUser(int $id)
@@ -23,6 +23,6 @@ class Point extends Model
             return $points;
         }
 
-        return $points[count($points) - 1];
+        return $points[0];
     }
 }

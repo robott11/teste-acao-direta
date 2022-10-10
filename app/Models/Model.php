@@ -18,22 +18,21 @@ abstract class Model
         $this->attributes[$name] = $value;
     }
 
+    public static function __callStatic(string $name, array $arguments)
+    {
+        $query = new QueryBuilder(static::$table, static::class);
+        $result = $query->$name(...$arguments);
+
+        if ($result instanceof QueryBuilder) {
+            return $result;
+        }
+
+        return $result;
+    }
+
     public function toArray(): array
     {
         return $this->attributes;
-    }
-
-    public function save(): Model|false
-    {
-        $query = new QueryBuilder(static::$table);
-
-        $result = $query->insert($this->attributes);
-
-        if (!$result) {
-            return false;
-        }
-
-        return self::getById($result);
     }
 
     public function update()
@@ -46,10 +45,12 @@ abstract class Model
 
     public static function create(array $attributes = [])
     {
-        return self::setAttributes($attributes)->save();
+        $id = self::save($attributes);
+
+        return self::getById($id);
     }
 
-    private static function setAttributes(array $attributes): Model
+    public static function setAttributes(array $attributes): Model
     {
         $model = new static();
 
@@ -62,46 +63,6 @@ abstract class Model
 
     public static function getById(int $id): Model|null
     {
-        $results = (new QueryBuilder(static::$table))->where('id', '=', $id)->get();
-
-        if (count($results) < 1) {
-            return null;
-        }
-
-        return self::setAttributes($results[0]);
-    }
-
-    public static function all(): array
-    {
-        $results = (new QueryBuilder(static::$table))->get();
-
-        $collection = [];
-
-        foreach ($results as $result) {
-            $collection[] = self::setAttributes($result);
-        }
-
-        return $collection;
-    }
-
-    public static function where(string $column, string $operator, string $value): Model|array|null
-    {
-        $results = (new QueryBuilder(static::$table))->where($column, $operator, $value)->get();
-
-        if (count($results) < 1) {
-            return null;
-        }
-
-        if (count($results) > 1) {
-            $collection = [];
-
-            foreach ($results as $result) {
-                $collection[] = self::setAttributes($result);
-            }
-
-            return $collection;
-        }
-
-        return self::setAttributes($results[0]);
+        return self::where('id', '=', $id)->get();
     }
 }

@@ -33,21 +33,25 @@
             </li>
         </ul>
     </div>
-    <div class="col-10">
-        <table class="table">
-            <thead>
+    <div class="col-10 p-4">
+        <table class="table table-striped">
+            <thead class="table-dark">
             <tr>
-                <th>Entrada/Saída</th>
-                <th>Hora</th>
+                <th>#</th>
+                <th>Evento</th>
+                <th>Horário</th>
                 <th>Usuário</th>
+                <th>Ações</th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($points as $point): ?>
             <tr>
-                <td><?php echo $point->is_entrance ?></td>
-                <td><?php echo $point->hour ?></td>
+                <th scope="row"><?php echo $point->id ?></th>
+                <td><?php echo $point->is_entrance ? 'Entrada' : 'Saída' ?></td>
+                <td><?php echo convertDateTimeDB($point->hour, 'd/m/Y H:i') ?></td>
                 <td><?php echo $user->name ?></td>
+                <td></td>
             </tr>
             <?php endforeach ?>
             </tbody>

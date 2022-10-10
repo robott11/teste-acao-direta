@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/toastr.min.css">
 
     <title>Empresa XXX | <?php echo $title ?? 'Document' ?></title>
 </head>
@@ -16,6 +17,7 @@
 
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/toastr.min.js"></script>
 <script>
     let userId = <?php echo $user->id ?>;
 

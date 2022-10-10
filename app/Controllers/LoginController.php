@@ -25,7 +25,7 @@ class LoginController extends Controller
             return (new Response(200))->redirect('/login')->withError('login', 'Os campos de usuário e senha são obrigatórios.');
         }
 
-        $user = User::where('username', '=', $username);
+        $user = User::where('username', '=', $username)->get();
         if (!$user || !password_verify($password, $user->password)) {
             return (new Response(200))->redirect('/login')->withError('login', 'Credenciais incorretas.');
         }

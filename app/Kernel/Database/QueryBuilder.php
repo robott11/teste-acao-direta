@@ -9,13 +9,18 @@ class QueryBuilder extends DatabaseConnection
 {
     private string $table;
 
+    private string $model;
+
     private string $sql = '';
 
     private string $wheres = '';
 
-    public function __construct(string $table)
+    private string $order = '';
+
+    public function __construct(string $table, string $model)
     {
         $this->table = $table;
+        $this->model = $model;
     }
 
     private function execute(): PDOStatement|null
@@ -52,7 +57,7 @@ class QueryBuilder extends DatabaseConnection
         return $this->execute();
     }
 
-    public function insert(array $attributes)
+    public function save(array $attributes)
     {
         $columns = implode(', ', array_keys($attributes));
 
@@ -78,9 +83,11 @@ class QueryBuilder extends DatabaseConnection
 
     public function get()
     {
-        $this->sql = 'SELECT * FROM ' . $this->table . ' ' . $this->wheres;
+        $this->sql = 'SELECT * FROM ' . $this->table . ' ' . $this->wheres . ' ' . $this->order;
 
-        return $this->execute()->fetchAll(PDO::FETCH_ASSOC);
+        return $this->setModel(
+            $this->execute()->fetchAll(PDO::FETCH_ASSOC)
+        );
     }
 
     public function where(string $column, string $operator, string $value): QueryBuilder
@@ -92,5 +99,27 @@ class QueryBuilder extends DatabaseConnection
         $this->wheres = 'WHERE ' . $column . ' ' . $operator . ' "' . $value . '"';
 
         return $this;
+    }
+
+    public function orderBy(string $column, string $order = 'DESC'): QueryBuilder
+    {
+        $this->order = 'ORDER BY ' . $column . ' ' . $order;
+
+        return $this;
+    }
+
+    private function setModel(array $result)
+    {
+        if (count($result) > 1) {
+            $models = [];
+
+            foreach ($result as $item) {
+                $models[] = $this->model::setAttributes($item);
+            }
+
+            return $models;
+        }
+
+        return $this->model::setAttributes($result[0]);
     }
 }
