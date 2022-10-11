@@ -22,15 +22,6 @@
             <li class="nav-item mb-2">
                 <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
             </li>
-            <li class="nav-item mb-2"">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item mb-2"">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item mb-2"">
-                <a class="nav-link" href="#">Disabled</a>
-            </li>
         </ul>
     </div>
     <div class="col-10 p-4">

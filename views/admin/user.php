@@ -37,7 +37,7 @@
                 ?>
                 <tr>
                     <td><?php echo $point->id ?></td>
-                    <td><?php echo $point->is_entrance = 1 ? 'Entrada' : 'Saída' ?></td>
+                    <td><?php echo $point->is_entrance == 1 ? 'Entrada' : 'Saída' ?></td>
                     <td><?php echo convertDateTimeDB($point->hour, 'd/m/Y H:i') ?></td>
                 </tr>
                 <?php

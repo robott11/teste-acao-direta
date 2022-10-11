@@ -15,7 +15,7 @@ class AdminController extends Controller
     {
         $users = User::get();
 
-        if (!is_array(User::get())) {
+        if (!is_array(User::get()) && isset($users)) {
             $users = [
                 0 => User::get()
             ];
