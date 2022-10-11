@@ -19,6 +19,10 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/toastr.min.js"></script>
 <script>
+    function convertDateTimeViewJS(datetime) {
+        return new Date(datetime).toLocaleDateString('pt-br', { hour:"numeric", minute:"numeric", year:"numeric", month:"numeric", day:"numeric"});
+    }
+
     let userId = <?php echo $user->id ?>;
 
     $('#clock-btn').click(function (e) {
@@ -30,7 +34,19 @@
                 user: userId
             },
             success: function (data) {
-                console.log(data);
+                $('#dashboard-table tbody').prepend(
+                    `<tr>
+                        <th>${data.id}</th>
+                        <td>${data.is_entrance == 1 ? 'Entrada' : 'Saída' }</td>
+                        <td>${convertDateTimeViewJS(data.hour)}</td>
+                        <td><?php echo $user->name ?></td>
+                        <td></td>
+                    </tr>`
+                );
+
+                toastr.options.closeButton = true;
+                toastr.options.progressBar = true;
+                toastr.info('Ponto registrado.');
             }
         });
     });

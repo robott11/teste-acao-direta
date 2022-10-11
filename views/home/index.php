@@ -34,7 +34,7 @@
         </ul>
     </div>
     <div class="col-10 p-4">
-        <table class="table table-striped">
+        <table class="table table-striped" id="dashboard-table">
             <thead class="table-dark">
             <tr>
                 <th>#</th>
