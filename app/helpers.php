@@ -51,3 +51,15 @@ if (!function_exists('convertDateTimeDB')) {
         return $dateTimeOb->format($format);
     }
 }
+
+if (!function_exists('asset')) {
+    function asset(string $route = ''): string {
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $url = 'https://';
+        else
+            $url = 'http://';
+        $url.= $_SERVER['HTTP_HOST'];
+
+        return $url . $route;
+    }
+}
