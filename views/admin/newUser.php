@@ -38,7 +38,7 @@
                         <input type="text" name="username" class="form-control">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Senha</label>
+                        <label class="form-label">Senha</label>
                         <input type="password" name="password" class="form-control">
                     </div>
                     <div class="col-12">

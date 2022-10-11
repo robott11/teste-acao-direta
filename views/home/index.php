@@ -32,7 +32,6 @@
                 <th>Evento</th>
                 <th>Horário</th>
                 <th>Usuário</th>
-                <th>Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -45,7 +44,6 @@
                 <td><?php echo $point->is_entrance ? 'Entrada' : 'Saída' ?></td>
                 <td><?php echo convertDateTimeDB($point->hour, 'd/m/Y H:i') ?></td>
                 <td><?php echo $user->name ?></td>
-                <td></td>
             </tr>
             <?php
             endforeach;

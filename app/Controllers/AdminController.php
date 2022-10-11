@@ -79,7 +79,7 @@ class AdminController extends Controller
     {
         $username = $request->username;
         $name = $request->name;
-        $password = $request->name;
+        $password = $request->password;
 
         if (empty($username) || empty($name) || empty($password)) {
             return (new Response())->redirect('/admin/new-user')->withError('register', 'Os campos de usuário e senha são obrigatórios.');

@@ -28,11 +28,11 @@
                                         </div>
                                     <?php endif; ?>
                                     <div class="form-floating mb-3">
-                                        <input name="user" type="text" class="form-control" id="user-input" placeholder="exemplo@email.com">
+                                        <input name="user" type="text" class="form-control" id="user-input">
                                         <label for="user-input">Nome de Usuário</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input name="password" type="password" class="form-control" id="password-input" placeholder="*******">
+                                        <input name="password" type="password" class="form-control" id="password-input">
                                         <label for="password-input">Informe a Senha</label>
                                     </div>
                                     <div class="mt-3 d-grid">
