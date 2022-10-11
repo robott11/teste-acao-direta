@@ -19,3 +19,4 @@ Router::get('/admin/logout', [AdminController::class, 'logout']);
 Router::get('/admin/new-user', [AdminController::class, 'newUser']);
 Router::post('/admin/new-user', [AdminController::class, 'storeUser']);
 Router::get('/admin/user', [AdminController::class, 'getUser']);
+Router::post('/admin/user', [AdminController::class, 'getUser']);

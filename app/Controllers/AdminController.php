@@ -104,6 +104,13 @@ class AdminController extends Controller
             'points' => $points
         ];
 
+        if ($request->getMethod() == 'POST') {
+            $data['points'] = Point::where('user_id', '=', $request->id)
+                    ->where('hour', '>=', convertDateTimeView($request->start_date))
+                    ->where('hour', '<=', convertDateTimeView($request->end_date))
+                    ->get();
+        };
+
         return $this->view('admin/user', 'layouts/admin', $data);
     }
 }

@@ -52,6 +52,14 @@ if (!function_exists('convertDateTimeDB')) {
     }
 }
 
+if (!function_exists('convertDateTimeView')) {
+    function convertDateTimeView(string $dateTime): string {
+        $dateTimeOb = DateTime::createFromFormat('d/m/Y H:i', $dateTime);
+
+        return $dateTimeOb->format('Y-m-d H:i:s');
+    }
+}
+
 if (!function_exists('asset')) {
     function asset(string $route = ''): string {
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
