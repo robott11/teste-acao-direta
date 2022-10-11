@@ -15,3 +15,4 @@ Router::get('/point', [HomeController::class, 'hitPoint']);
 Router::get('/admin', [AdminController::class, 'index'], checkAdminAuth::class);
 Router::get('/admin/login', [AdminController::class, 'loginPage']);
 Router::post('/admin/login', [AdminController::class, 'login']);
+Router::get('/admin/logout', [AdminController::class, 'logout']);

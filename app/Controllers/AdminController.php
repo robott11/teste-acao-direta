@@ -45,4 +45,13 @@ class AdminController extends Controller
 
         return (new Response)->redirect('/admin');
     }
+
+    public function logout(): Response
+    {
+        if (Auth::getAuthUser('admin')) {
+            Auth::logout('admin');
+
+            return (new Response)->redirect('/admin');
+        }
+    }
 }
