@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin">Home</a>
+                    <a class="nav-link" aria-current="page" href="/admin">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/admin/new-user">Criar usuário</a>
@@ -20,31 +20,25 @@
     </div>
 </nav>
 <div class="container">
-    <div class="row mt-2">
+    <div class="row">
         <div class="col">
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Username</th>
-                    <th>Nome</th>
-                    <th>Ações</th>
+                    <th>Evento</th>
+                    <th>Horário</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                if (isset($users)):
-                foreach ($users as $user):
+                if (isset($points)):
+                foreach ($points as $point):
                 ?>
                 <tr>
-                    <th><?php echo $user->id ?></th>
-                    <td><?php echo $user->username ?></td>
-                    <td><?php echo $user->name ?></td>
-                    <td>
-                        <a href="/admin/user?id=<?php echo $user->id ?>" class="text-dark">
-                            <i class="fa-regular fa-file-lines"></i>
-                        </a>
-                    </td>
+                    <td><?php echo $point->id ?></td>
+                    <td><?php echo $point->is_entrance = 1 ? 'Entrada' : 'Saída' ?></td>
+                    <td><?php echo convertDateTimeDB($point->hour, 'd/m/Y H:i') ?></td>
                 </tr>
                 <?php
                 endforeach;

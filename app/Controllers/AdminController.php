@@ -6,6 +6,7 @@ use App\Http\Request;
 use App\Http\Response;
 use App\Kernel\Auth;
 use App\Models\Admin;
+use App\Models\Point;
 use App\Models\User;
 
 class AdminController extends Controller
@@ -91,5 +92,18 @@ class AdminController extends Controller
         ]);
 
         return (new Response())->redirect('/admin');
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = User::getById($request->id);
+        $points = Point::getPointsByUserId($request->id);
+
+        $data = [
+            'title' => $user->name,
+            'points' => $points
+        ];
+
+        return $this->view('admin/user', 'layouts/admin', $data);
     }
 }

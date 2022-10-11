@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="<?php echo asset('/assets/css/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?php echo asset('/assets/css/toastr.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo asset('/assets/css/fontawesome.min.css') ?>">
 
     <title>Painel Admin | <?php echo $title ?? 'Document' ?></title>
 </head>
@@ -17,5 +18,6 @@
 
 <script src="<?php echo asset('/assets/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?php echo asset('/assets/js/jquery.min.js') ?>"></script>
+<script src="<?php echo asset('/assets/js/fontawesome.min.js') ?>"></script>
 </body>
 </html>

@@ -45,7 +45,10 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($points as $point): ?>
+            <?php
+            if (isset($points)):
+            foreach ($points as $point):
+            ?>
             <tr>
                 <th scope="row"><?php echo $point->id ?></th>
                 <td><?php echo $point->is_entrance ? 'Entrada' : 'Saída' ?></td>
@@ -53,7 +56,10 @@
                 <td><?php echo $user->name ?></td>
                 <td></td>
             </tr>
-            <?php endforeach ?>
+            <?php
+            endforeach;
+            endif;
+            ?>
             </tbody>
         </table>
     </div>
