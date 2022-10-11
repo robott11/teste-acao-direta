@@ -6,13 +6,23 @@ use App\Http\Request;
 use App\Http\Response;
 use App\Kernel\Auth;
 use App\Models\Admin;
+use App\Models\User;
 
 class AdminController extends Controller
 {
     public function index()
     {
+        $users = User::get();
+
+        if (!is_array(User::get())) {
+            $users = [
+                0 => User::get()
+            ];
+        }
+
         $data = [
-            'title' => 'Usuários'
+            'title' => 'Usuários',
+            'users' => $users
         ];
 
         return $this->view('admin/index', 'layouts/admin', $data);
@@ -53,5 +63,33 @@ class AdminController extends Controller
 
             return (new Response)->redirect('/admin');
         }
+    }
+
+    public function newUser()
+    {
+        $data = [
+            'title' => 'Criar novo usuário'
+        ];
+
+        return $this->view('admin/newUser', 'layouts/admin', $data);
+    }
+
+    public function storeUser(Request $request)
+    {
+        $username = $request->username;
+        $name = $request->name;
+        $password = $request->name;
+
+        if (empty($username) || empty($name) || empty($password)) {
+            return (new Response())->redirect('/admin/new-user')->withError('register', 'Os campos de usuário e senha são obrigatórios.');
+        }
+
+        User::create([
+            'username' => $username,
+            'name' => $name,
+            'password' => password_hash($password, PASSWORD_BCRYPT)
+        ]);
+
+        return (new Response())->redirect('/admin');
     }
 }

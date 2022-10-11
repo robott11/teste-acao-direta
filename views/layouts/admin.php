@@ -11,12 +11,11 @@
 
     <title>Painel Admin | <?php echo $title ?? 'Document' ?></title>
 </head>
-<body class="bg-dark">
+<body>
 
 <?php echo $content ?>
 
 <script src="<?php echo asset('/assets/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?php echo asset('/assets/js/jquery.min.js') ?>"></script>
-</script>
 </body>
 </html>

@@ -16,3 +16,5 @@ Router::get('/admin', [AdminController::class, 'index'], checkAdminAuth::class);
 Router::get('/admin/login', [AdminController::class, 'loginPage']);
 Router::post('/admin/login', [AdminController::class, 'login']);
 Router::get('/admin/logout', [AdminController::class, 'logout']);
+Router::get('/admin/new-user', [AdminController::class, 'newUser']);
+Router::post('/admin/new-user', [AdminController::class, 'storeUser']);
