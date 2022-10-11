@@ -120,6 +120,10 @@ class QueryBuilder extends DatabaseConnection
             return $models;
         }
 
+        if (empty($result)) {
+            return null;
+        }
+
         return $this->model::setAttributes($result[0]);
     }
 }
